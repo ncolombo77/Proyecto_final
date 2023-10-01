@@ -1,0 +1,50 @@
+<p style="color:red;"><strong>{{error}}</strong></p>
+
+{{#if payload}}
+
+    {{#if user}}
+        <h1>Bienvenido, {{user.first_name}}. Estos son nuestros productos:</h1>
+    {{else}}
+        <h1>Nuestros productos:</h1>
+    {{/if}}
+
+    <section id="catalogo">
+    {{#each payload}}
+        <div>
+            <article>
+                <h4>{{this.title}}</h4>
+                <img src="{{../hostUrl}}/images/{{this.image}}" alt="{{this.description}}" />
+                <h4>$ {{this.price}} ({{this.stock}} disponibles)</h4>
+                <h4>Categoría: {{this.category}}</h4>
+                <br />
+                <button onclick="addToCart('{{this._id}}')"> Agregar al carrito </button>
+            </article>
+        </div>
+        
+    {{/each}}
+    </section>
+
+    <div class="paginador">
+    {{#if hasPrevPage}}
+        <a class="botonPaginacion" href="{{prevLink}}">Anterior</a>
+    {{/if}}
+
+    <p class="numeroPagina">{{page}}</p>
+
+    {{#if hasNextPage}}
+        <a class="botonPaginacion" href="{{nextLink}}">Siguiente</a>
+    {{/if}}
+    </div>
+
+{{else}}
+
+    <h3>No hay productos.</h3>
+
+{{/if}}
+
+<script>
+    const addToCart = (productId) => {
+        console.log(`Producto agregado: ${productId}`);
+        fetch();
+    }
+</script>

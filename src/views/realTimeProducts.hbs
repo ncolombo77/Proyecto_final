@@ -1,0 +1,43 @@
+<h1>Carga y visualización de productos en tiempo real</h1>
+
+<div id="newProduct" class="newProduct">
+    <div class="productProperty">
+        <span>Título del producto</span>
+        <input type="text" id="title" placeholder="Titulo del producto" />
+    </div>
+    <div class="productProperty">
+        <span>Código</span>
+        <input type="text" id="code" placeholder="Código del producto" />
+    </div>
+    <div class="productProperty">
+        <span>Descripción</span>
+        <input type="text" id="description" placeholder="Descripción del producto" />
+    </div>
+    <div class="productProperty">
+        <span>Precio</span>
+        <input type="text" id="price" placeholder="Precio del producto" />
+    </div>
+    <div class="productProperty">
+        <span>Stock</span>
+        <input type="text" id="stock" placeholder="Stock" />
+    </div>
+    <div class="productProperty">
+        <span>Categoría</span>
+        <input type="text" id="category" placeholder="Categoría" />
+    </div>
+    <button type="submit" id="btnAgregar">Agregar</button>
+</div>
+
+
+<p id="productsList">
+{{#each products}}
+    Id: {{this.id}} - Nombre: {{this.title}} ({{this.code}})<br />
+    Descripción: {{this.description}}<br />
+    Precio: {{this.price}}<br />
+    Stock: {{this.stock}}<br />
+    Categoría: {{this.category}}<br />
+{{/each}}
+</p>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realtimeproducts.js"></script>

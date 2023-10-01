@@ -1,0 +1,233 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #211720;
+    color: white;
+}
+
+
+header nav {
+    background-color: #211720;
+    color: white;
+    font-size: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 2px solid orange;
+    margin: 0.4rem;
+    padding-bottom: 0.8rem;
+}
+
+
+.nav-link {
+    text-decoration: none;
+    padding: 0.8rem;
+    border-radius: 6px;
+    transition-duration: 400ms;
+    color: white;
+}
+
+
+.nav-link:hover {
+    background-color: #e8a65a;
+    color: black;
+}
+
+
+.nav-link:visited {
+    text-decoration: none;
+}
+
+
+.nav-part {
+    display: flex;
+    flex-direction: row;
+    margin: 0.8rem;
+    border-radius: 5px;
+    align-items: center;
+    gap: 10px;
+}
+
+
+main h1 {
+    padding: 1rem;
+    font-size: 2.5em;   
+}
+
+
+main h2 {
+    padding: 1rem;
+    background-color: #D0E6FD;
+    color: #000000;
+    font-size: 2em;
+}
+
+main h3 {
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #eeeeee;
+    color: #000000;
+    font-size: 1.8em;
+    border-radius: 10px;
+}
+
+main p {
+    font-size: 2em;
+    padding: 1.5rem;
+}
+
+main section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 2rem;
+}
+
+main span {
+    display: block;
+    text-align: right;
+    font-size: 1.2rem;
+    padding: 2rem;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+    width: 260px;
+    height: 340px;
+    border: 1px solid #bbbbbb;
+    border-radius: 10px;
+    transition-duration: 400ms;
+}
+
+article:hover {
+    box-shadow: 5px 8px 10px #000000;
+    transition: all 0.4s;
+}
+
+article h4 {
+    font-size: 1.5em;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+article button {
+    font-size: 1.5em;
+    padding: 0.8rem;
+    background-color: #211720;
+    color: white;
+    border-radius: 8px;
+    block-size: 40px;
+    border: white 1px solid;
+    transition-duration: 400ms;
+    font-weight: bold;
+}
+
+
+article button:hover {
+    color: black;
+    background-color: #e8a65a;
+    border-color: #e8a65a;
+    cursor: pointer;
+}
+
+article img {
+    width: 240px;
+    height: 168px;
+}
+
+.newProduct {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.productProperty {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.paginador {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.botonPaginacion {
+    font-size: 1.5em;
+    padding: 0.8rem;
+    background-color: #211720;
+    color: white;
+    border-radius: 8px;
+    block-size: 20px;
+    border: white 1px solid;
+    text-decoration: none;
+}
+
+.numeroPagina {
+    font-size: 1.5em;
+    padding: 0.8rem;
+    background-color: #211720;
+    color: white;
+    block-size: 20px;
+}
+
+
+.loginBox {
+    padding: 2rem;
+    margin: 0.5rem;
+    text-align: center;
+}
+
+
+.loginForm input {
+    font-size: 1.8em;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid white;
+    padding: 0.3rem;
+    width: 25%;
+}
+
+
+.loginForm input:focus {
+    font-size: 1.8em;
+    border-color: orange;
+}
+
+
+.estiloBoton {
+    font-size: 1.5em;
+    padding: 0.8rem;
+    background-color: #211720;
+    color: white;
+    border-radius: 8px;
+    block-size: 40px;
+    border: white 1px solid;
+    transition-duration: 400ms;
+    text-decoration: none;
+}
+
+
+.estiloBoton:hover {
+    background-color: #dddddd;
+    color: #211720;
+}
+
+
+.GithubLogin {
+    border-radius: 8px;
+}

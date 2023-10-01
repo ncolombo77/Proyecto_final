@@ -1,0 +1,62 @@
+[
+	{
+		"id": 1,
+		"title": "Alfajor Dulce de leche",
+		"description": "Alfajor de dulce de leche glaseado",
+		"price": 300,
+		"code": "ALF001",
+		"stock": 100,
+		"status": true,
+		"category": "Alfajores"
+	},
+	{
+		"id": 2,
+		"title": "Alfajor de Chocolate",
+		"description": "Alfajor de dulce de leche bañado en chocolate",
+		"price": 300,
+		"code": "ALF002",
+		"stock": 110,
+		"status": true,
+		"category": "Alfajores"
+	},
+	{
+		"id": 3,
+		"title": "Alfajor de Maizena",
+		"description": "Alfajor de maizena con dulce de lecha y coco",
+		"price": 180,
+		"code": "ALF003",
+		"stock": 80,
+		"status": true,
+		"category": "Alfajores"
+	},
+	{
+		"id": 4,
+		"title": "Conito de dulce de leche",
+		"description": "Conito de dulce de leche bañado en chocolate",
+		"price": 200,
+		"code": "CON001",
+		"stock": 200,
+		"status": true,
+		"category": "Conitos"
+	},
+	{
+		"id": 5,
+		"title": "Conito de dulce de leche blanci",
+		"description": "Conito de dulce de leche bañado en chocolate blanco",
+		"price": 200,
+		"code": "CON002",
+		"stock": 130,
+		"status": true,
+		"category": "Conitos"
+	},
+	{
+		"id": 7,
+		"title": "Colación dulce de leche",
+		"description": "Colación de dulce de leche glaseada",
+		"price": 180,
+		"code": "COL002",
+		"stock": 80,
+		"status": true,
+		"category": "Regionales"
+	}
+]
