@@ -19,12 +19,19 @@ export const initializePassport = () => {
                 if (user) {
                     return done(null, false);
                 }
+
+                let role = "user";
+                if (username.endsWith("@coder.com")) {
+                    role = "admin";
+                }
+
                 const newUser =  {
                     first_name,
                     last_name,
                     age,
                     email: username,
-                    password: createHash(password)
+                    password: createHash(password),
+                    role: role
                 };
                 const userCreated = await UsersServices.saveUser(newUser);
 
@@ -77,11 +84,18 @@ export const initializePassport = () => {
                 console.log("profile", profile);
                 const user = await UsersServices.getUserByEmail(profile.username);
                 if (!user) {
+
+                    let role = "user";
+                    if (profile.username.endsWith("@coder.com")) {
+                        role = "admin";
+                    }
+
                     const newUser = {
                         first_name: profile.username,
                         last_name: profile.username,
                         email: profile.username,
-                        password: createHash(profile.id)
+                        password: createHash(profile.id),
+                        role: role
                     };
                     const userCreated = await UsersServices.saveUser(newUser);
                     return done(null, userCreated);

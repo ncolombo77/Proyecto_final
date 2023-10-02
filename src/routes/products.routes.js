@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ProductsController } from "../controllers/products.controller.js";
-
+import { checkRole } from "../middlewares/auth.js";
 
 const validateFields = (req, res, next) => {
     const productInfo = req.body;
@@ -22,11 +22,11 @@ router.get("/", ProductsController.getProducts);
 
 router.get("/:pid", ProductsController.getProduct);
 
-router.post("/", validateFields, ProductsController.createProduct);
+router.post("/", checkRole(["admin"]), validateFields, ProductsController.createProduct);
 
-router.put("/:pid", validateFields, ProductsController.updateProduct);
+router.put("/:pid", checkRole(["admin"]), validateFields, ProductsController.updateProduct);
 
-router.delete("/:pid", ProductsController.deleteProduct);
+router.delete("/:pid", checkRole(["admin"]), ProductsController.deleteProduct);
 
 
 export { router as productsRouter };

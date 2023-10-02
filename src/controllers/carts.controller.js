@@ -5,11 +5,21 @@ export class CartsController {
 
     static createCart = async (req, res) => {
         try {
-            const cartCreated = await CartsServices.save();
+            const cartCreated = await CartsServices.saveCart();
             res.json({ status: "success", data: cartCreated, message: "Carrito creado." });
         }
         catch (error) {
             res.json({ status:"error", message: error.message });
+        }
+    };
+
+
+    static getAll = async (req, res) => {
+        try {
+            const carts = await CartsServices.getCarts();
+            res.json({status: "success", data: carts});
+        } catch (error) {
+            res.json({status: "error", message: error.message});
         }
     };
 
@@ -36,24 +46,23 @@ export class CartsController {
             const cart = await CartsServices.getCart(cartId);
             if (cart) {
                 const product = await ProductsServices.getById(productId);
-                let cartProducts = cart.products;
-    
-                let prod = cartProducts.find((p) => { return parseInt(p.product) === parseInt(productId) });
-    
+
+                let prod = cart.products.find(p => p.productId == productId );
+
                 if (prod != undefined) {
                     prod.quantity++;
                 }
                 else {
                     const newProd = {
-                        product: parseInt(productId),
+                        productId: productId,
                         quantity: 1
                     };
                     cart.products.push(newProd);
                 }
     
-                CartsServices.update(cartId, cart);
+                const cartUpdated = await CartsServices.updateCart(cartId, cart);
     
-                res.json({ status: "success", data: cart });
+                res.json({ status: "success", data: cartUpdated });
             }
             else {
                 res.json({ status: "error", message: `El carrito ${ cid } no existe.`});
@@ -81,7 +90,7 @@ export class CartsController {
                 {
                     let indice = cart.products.findIndex(prod => product.id == id);
                     cart.products.splice(indice, 1);
-                    CartsServices.updateCart(cart);
+                    CartsServices.updateCart(cartId, cart);
                 }
                 else
                 {
@@ -126,5 +135,13 @@ export class CartsController {
         }
     };
 
+
+    static purchase = async (req, res) => {
+        try {
+            
+        } catch (error) {
+            res.json({status: "error", message: error.message});
+        }
+    };
 
 }

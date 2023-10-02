@@ -16,12 +16,12 @@ export class SessionsController {
 
 
     static redirectProducts = (req, res) => {
-        res.redirect("/products");
+        res.redirect(303, "/products");
     };
 
 
     static redirectProfile = (req, res) => {
-        res.redirect("/profile");
+        res.redirect(303, "/profile");
     };
 
 
@@ -38,7 +38,7 @@ export class SessionsController {
             }
         });
     
-        res.redirect("/login");
+        res.redirect(303, "/login");
     };
 
 }

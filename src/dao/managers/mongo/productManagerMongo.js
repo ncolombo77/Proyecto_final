@@ -57,14 +57,14 @@ export class ProductManagerMongo {
 
 
     // Actualizar un producto
-    async update(productInfo) {
+    async updateProduct(productId, product) {
         try {
-            const productUpdated = await this.model.update(productInfo);
+            const productUpdated = await this.model.findByIdAndUpdate(productId, product, {new: true});
             return productUpdated;
         }
         catch(error) {
             console.log(`Se produjo un error al actualizar un producto (método update()): ${ error.message }`);
-            throw new error(`Se produjo un error al actualizar el producto.`);
+            throw error;
         }
     };
 

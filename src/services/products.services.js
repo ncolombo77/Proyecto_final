@@ -22,8 +22,8 @@ export class ProductsServices {
     };
 
 
-    static updateProduct = async (productInfo) => {
-        return await productDao.update(productInfo);
+    static updateProduct = async (productId, product) => {
+        return await productDao.updateProduct(productId, product);
     };
 
 

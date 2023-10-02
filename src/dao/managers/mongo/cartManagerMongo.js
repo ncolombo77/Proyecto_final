@@ -35,12 +35,13 @@ export class CartManagerMongo {
     }
 
 
-    async update(cart){
+    async update(cartId, cart){
         try {
-            const cartUpdated = await this.model.updateOne(cart);
+            const cartUpdated = await this.model.findByIdAndUpdate(cartId, cart, {new: true});
             return cartUpdated;
         } catch (error) {
-            throw new error(`Se produjo un error al actualizar el carrito ${ cart.id }.`);
+            throw error;
+            //throw new error(`Se produjo un error al actualizar el carrito ${ cart.id }.`);
         }
     }
 

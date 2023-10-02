@@ -1,10 +1,21 @@
 import mongoose from "mongoose";
-import { cartsCollection } from "../../constants/index.js";
+import { cartsCollection, productsCollection } from "../../constants/index.js";
 
 // Esquema de los productos.
 const cartSchema = new mongoose.Schema({
     products: {
-        type: [],
+        type: [
+            {
+                quantity: {
+                    type: Number,
+                    default: 1
+                },
+                productId: {
+                    type: mongoose.Types.ObjectId,
+                    ref: productsCollection
+                }
+            }
+        ],
         default: []
     }
 });
