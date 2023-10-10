@@ -10,6 +10,7 @@ import { viewsRouter } from "./routes/views.routes.js";
 import { productsRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
 import { sessionsRouter } from "./routes/sessions.routes.js";
+import { mockingRouter } from "./routes/mocking.routes.js";
 
 import { chatModel } from "./dao/models/chat.model.js";
 
@@ -18,6 +19,8 @@ import mongoStore from "connect-mongo";
 
 import { initializePassport } from "./config/passportConfig.js";
 import passport from "passport";
+
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 
 const port = config.server.port;
@@ -51,10 +54,14 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use(viewsRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
+app.use("/mockingproducts", mockingRouter);
+
+app.use(errorHandler);
 
 
 socketServer.on("connection", (socketConnected) => {

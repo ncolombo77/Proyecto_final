@@ -2,6 +2,7 @@ import { Router } from "express";
 import { ProductsController } from "../controllers/products.controller.js";
 import { checkRole } from "../middlewares/auth.js";
 
+
 const validateFields = (req, res, next) => {
     const productInfo = req.body;
 

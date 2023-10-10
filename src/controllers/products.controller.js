@@ -1,20 +1,35 @@
 import { ProductsServices } from "../services/products.services.js";
+import { CustomError } from "../services/error/customError.services.js";
+import { EError } from "../enums/EError.js";
+import { invalidLimitErrorMsg } from "../services/error/customErrorMessages.services.js";
 
 export class ProductsController {
 
     static getProducts = async (req, res) => {
         try {
-            const limit = req.query.limit;
-    
+            const strLimit = req.query.limit;
+
             const products = await ProductsServices.getProducts();
-    
-            if (limit) {
+
+            if (strLimit) {
+
+                const limit = parseInt(strLimit);
+
+                if (Number.isNaN(limit)) {
+                    CustomError.createError({
+                        name: "getProducts error",
+                        cause: invalidLimitErrorMsg(strLimit),
+                        message: "Error al devolver los productos.",
+                        errorCode: EError.INVALID_PARAM
+                    });
+                };
+
                 res.send(products.slice(0, limit));
             }
             else {
                 res.json({ status: "success", data: products });
             }
-    
+
         }
         catch (error) {
             res.json({ status:"error", message: error.message });
