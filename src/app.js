@@ -11,6 +11,7 @@ import { productsRouter } from "./routes/products.routes.js";
 import { cartsRouter } from "./routes/carts.routes.js";
 import { sessionsRouter } from "./routes/sessions.routes.js";
 import { mockingRouter } from "./routes/mocking.routes.js";
+import { loggerTestRouter } from "./routes/loggerTest.routes.js";
 
 import { chatModel } from "./dao/models/chat.model.js";
 
@@ -22,6 +23,9 @@ import passport from "passport";
 
 import { errorHandler } from "./middlewares/errorHandler.js";
 
+import { addLogger } from "./helpers/logger.js";
+
+const logger = addLogger();
 
 const port = config.server.port;
 const app = express();
@@ -30,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public")));
 
-const httpServer = app.listen(port, () => console.log(`Servidor iniciado en el puerto ${ port }.`));
+const httpServer = app.listen(port, () => logger.info(`Servidor iniciado en el puerto ${ port }.`));
 
 const socketServer = new Server(httpServer);
 
@@ -60,6 +64,7 @@ app.use("/api/sessions", sessionsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/mockingproducts", mockingRouter);
+app.use("/loggerTest", loggerTestRouter);
 
 app.use(errorHandler);
 

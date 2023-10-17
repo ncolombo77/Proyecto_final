@@ -1,4 +1,7 @@
 import { productsModel } from "../../models/products.model.js"
+import { addLogger } from "../../../helpers/logger.js";
+
+const logger = addLogger();
 
 export class ProductManagerMongo {
 
@@ -14,7 +17,7 @@ export class ProductManagerMongo {
             return products;
         }
         catch(error) {
-            console.log(`Se produjo un error al leer todos los productos (método getAll()): ${ error.message }`);
+            logger.error(`Se produjo un error al leer todos los productos (método getAll()): ${ error.message }`)
             throw new error(`Se produjo un error al leer todos los productos.`);
         }
     };
@@ -37,7 +40,7 @@ export class ProductManagerMongo {
             return product;
         }
         catch(error) {
-            console.log(`Se produjo un error al leer el producto ${ id } (método getById()): ${ error.message }`);
+            logger.error(`Se produjo un error al leer el producto ${ id } (método getById()): ${ error.message }`);
             throw new error(`Se produjo un error al leer el producto.`);
         }
     };
@@ -50,7 +53,7 @@ export class ProductManagerMongo {
             return productCreated;
         }
         catch(error) {
-            console.log(`Se produjo un error al grabar un producto (método save()): ${ error.message }`);
+            logger.error(`Se produjo un error al grabar un producto (método save()): ${ error.message }`);
             throw new error(`Se produjo un error al crear el producto.`);
         }
     };
@@ -63,7 +66,7 @@ export class ProductManagerMongo {
             return productUpdated;
         }
         catch(error) {
-            console.log(`Se produjo un error al actualizar un producto (método update()): ${ error.message }`);
+            logger.error(`Se produjo un error al actualizar un producto (método update()): ${ error.message }`);
             throw error;
         }
     };
@@ -76,7 +79,7 @@ export class ProductManagerMongo {
             return productDeleted;
         }
         catch(error) {
-            console.log(`Se produjo un error al eliminar un producto (método delete()): ${ error.message }`);
+            logger.error(`Se produjo un error al eliminar un producto (método delete()): ${ error.message }`);
             throw new error(`Se produjo un error al eliminar el producto.`);
         }
     };

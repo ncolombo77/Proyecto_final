@@ -1,4 +1,7 @@
 import { usersModel } from "../../models/users.model.js"
+import { addLogger } from "../../../helpers/logger.js";
+
+const logger = addLogger();
 
 export class UsersManagerMongo {
     constructor() {
@@ -10,6 +13,7 @@ export class UsersManagerMongo {
             const userCreated = await this.model.create(user);
             return userCreated;
         } catch (error) {
+            logger.error(error);
             throw error;
         }
     };
@@ -27,6 +31,7 @@ export class UsersManagerMongo {
                 throw new Error(`El usuario con id ${ userId } no existe.`);
             }
         } catch (error) {
+            logger.error(`Se produjo un error al buscar el empleado con el id ${userId}.`);
             throw error;
         }
     };
@@ -44,6 +49,7 @@ export class UsersManagerMongo {
                 return null;
             }
         } catch (error) {
+            logger.error(`Se produjo un error al buscar el empleado con el e-mail ${userEmail}.`);
             throw error;
         }
     };

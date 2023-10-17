@@ -1,4 +1,8 @@
 import { cartsModel } from "../../models/carts.model.js";
+import { addLogger } from "../../../helpers/logger.js";
+
+const logger = addLogger();
+
 
 export class CartManagerMongo {
     constructor() {
@@ -10,7 +14,8 @@ export class CartManagerMongo {
             const carts = await this.model.find();
             return carts;
         } catch (error) {
-            throw new error(`Se produjo un error al leer los carritos.`);
+            logger.error(`Se produjo un error al leer los carritos.`)
+            throw error;
         }
     }
 
@@ -20,7 +25,8 @@ export class CartManagerMongo {
             const cart = await this.model.findById(id);
             return cart;
         } catch (error) {
-            throw new error(`Se produjo un error al leer el carrito ${ id }.`);
+            logger.error(`Se produjo un error al leer el carrito ${ cart.id }.`)
+            throw error;
         }
     }
 
@@ -30,7 +36,8 @@ export class CartManagerMongo {
             const cartCreated = await this.model.create({});
             return cartCreated;
         } catch (error) {
-            throw new error(`Se produjo un error al crear el carrito.`);
+            logger.error(`Se produjo un error al crear el carrito.`)
+            throw error;
         }
     }
 
@@ -40,8 +47,8 @@ export class CartManagerMongo {
             const cartUpdated = await this.model.findByIdAndUpdate(cartId, cart, {new: true});
             return cartUpdated;
         } catch (error) {
+            logger.error(`Se produjo un error al actualizar el carrito ${ cart.id }.`)
             throw error;
-            //throw new error(`Se produjo un error al actualizar el carrito ${ cart.id }.`);
         }
     }
 
