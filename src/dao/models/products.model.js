@@ -32,6 +32,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ["Alfajores", "Conitos", "Regionales"]
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
     }
 });
 

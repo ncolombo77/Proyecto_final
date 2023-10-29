@@ -19,5 +19,9 @@ router.get("/realtimeproducts", ViewsController.renderRTProducts);
 
 router.get("/chat", ViewsController.renderChat);
 
+router.get("/forgot-password", ViewsController.renderForgotPassword);
+
+router.get("/reset-password", ViewsController.renderResetPassword);
+
 
 export { router as viewsRouter };

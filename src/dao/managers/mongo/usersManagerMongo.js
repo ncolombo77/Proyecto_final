@@ -49,7 +49,18 @@ export class UsersManagerMongo {
                 return null;
             }
         } catch (error) {
-            logger.error(`Se produjo un error al buscar el empleado con el e-mail ${userEmail}.`);
+            logger.error(`Se produjo un error al buscar el usuario con el e-mail ${userEmail}.`);
+            throw error;
+        }
+    };
+
+
+    async update(userId, userInfo) {
+        try {
+            const userUpdated = await this.model.findByIdAndUpdate(userId, userInfo, {new: true});
+            return userUpdated;
+        } catch (error) {
+            logger.error(`Se produjo un error al actualizar el usuario con el Id ${userId}.`);
             throw error;
         }
     };

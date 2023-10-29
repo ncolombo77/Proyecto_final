@@ -23,11 +23,11 @@ router.get("/", ProductsController.getProducts);
 
 router.get("/:pid", ProductsController.getProduct);
 
-router.post("/", checkRole(["admin"]), validateFields, ProductsController.createProduct);
+router.post("/", checkRole(["admin", "premium"]), validateFields, ProductsController.createProduct);
 
 router.put("/:pid", checkRole(["admin"]), validateFields, ProductsController.updateProduct);
 
-router.delete("/:pid", checkRole(["admin"]), ProductsController.deleteProduct);
+router.delete("/:pid", checkRole(["admin", "premium"]), ProductsController.deleteProduct);
 
 
 export { router as productsRouter };

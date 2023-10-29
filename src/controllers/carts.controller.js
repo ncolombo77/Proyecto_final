@@ -47,22 +47,29 @@ export class CartsController {
             if (cart) {
                 const product = await ProductsServices.getById(productId);
 
-                let prod = cart.products.find(p => p.productId == productId );
+                if (req.user.role === "premium" && product.owner.toString() !== req.user._id.toString()) {
+                    let prod = cart.products.find(p => p.productId == productId );
 
-                if (prod != undefined) {
-                    prod.quantity++;
+                    if (prod != undefined) {
+                        prod.quantity++;
+                    }
+                    else {
+                        const newProd = {
+                            productId: productId,
+                            quantity: 1
+                        };
+                        cart.products.push(newProd);
+                    }
+        
+                    const cartUpdated = await CartsServices.updateCart(cartId, cart);
+        
+                    res.json({ status: "success", data: cartUpdated });
                 }
                 else {
-                    const newProd = {
-                        productId: productId,
-                        quantity: 1
-                    };
-                    cart.products.push(newProd);
+                    res.json({ status: "error", message: `El usuario tiene rol premium, no puede comprar productos creados por él.`});
                 }
-    
-                const cartUpdated = await CartsServices.updateCart(cartId, cart);
-    
-                res.json({ status: "success", data: cartUpdated });
+
+
             }
             else {
                 res.json({ status: "error", message: `El carrito ${ cid } no existe.`});

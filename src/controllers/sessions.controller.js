@@ -1,3 +1,7 @@
+import { UsersServices } from "../services/users.services.js";
+import { generateEmailWithToken, recoveryEmail } from "../helpers/gmail.js";
+import { validateToken, createHash } from "../utils.js";
+
 export class SessionsController {
 
     static failedSignup = (req, res) => {
@@ -40,5 +44,53 @@ export class SessionsController {
     
         res.redirect(303, "/login");
     };
+
+
+    static forgotPassword = async (req, res) => {
+        try {
+
+            const { email } = req.body;
+
+            const user = await UsersServices.getUserByEmail(email);
+
+            if (!user) {
+                return res.json({status: "error", message: "No es posible reestablecer la constraseña. No hay usuarios vinculados a ese e-mail."});
+            }
+
+            const token = generateEmailWithToken(email, 3 * 60);
+
+            await recoveryEmail(req, email, token);
+
+            res.render("tokenSent");
+
+        } catch (error) {
+            res.json({status: "error", message: "No es posible reestablecer la constraseña: " + error.message});
+        }
+    };
+
+
+    static resetPassword = async (req, res) => {
+        try {
+            const token = req.query.token;
+            const { newPassword } = req.body;
+            const validEmail = validateToken(token);
+            if (validEmail) {
+                const user = await UsersServices.getUserByEmail(validEmail);
+                if (user) {
+                    user.password = createHash(newPassword);
+                    await UsersServices.updateUser(user._id, user);
+                    res.render("login", { message:"Contraseña actualizada, para continuar inicia sesión." });
+                }
+            }
+            else {
+                res.render("login", {error: "El enlace ha caducado, intentar nuevamente."})
+            }
+        } catch (error) {
+            return res.send("No se pudo reestablecer la contraseña.")
+        }
+
+
+    };
+
 
 }

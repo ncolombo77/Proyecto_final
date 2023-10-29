@@ -12,6 +12,7 @@ import { cartsRouter } from "./routes/carts.routes.js";
 import { sessionsRouter } from "./routes/sessions.routes.js";
 import { mockingRouter } from "./routes/mocking.routes.js";
 import { loggerTestRouter } from "./routes/loggerTest.routes.js";
+import { usersRouter } from "./routes/users.routes.js";
 
 import { chatModel } from "./dao/models/chat.model.js";
 
@@ -65,6 +66,7 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/mockingproducts", mockingRouter);
 app.use("/loggerTest", loggerTestRouter);
+app.use("/api/users", usersRouter);
 
 app.use(errorHandler);
 

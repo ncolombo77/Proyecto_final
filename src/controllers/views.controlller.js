@@ -87,4 +87,17 @@ export class ViewsController {
     static renderChat = (req, res) => {
         res.render("chat");
     };
+
+
+    static renderForgotPassword = (req, res) => {
+        res.render("forgotPassword");
+    };
+
+
+    static renderResetPassword = (req, res) => {
+        const token = req.query.token;
+        res.render("resetPassword", {token});
+    };
+
+
 }

@@ -209,9 +209,17 @@ article img {
 }
 
 
+.loginForm a {
+    font-size: 1.8em;
+    color: white;
+}
+
+
 .estiloBoton {
     font-size: 1.5em;
     padding: 0.8rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     background-color: #211720;
     color: white;
     border-radius: 8px;

@@ -16,4 +16,8 @@ export class UsersServices {
         return await userDao.save(user);
     };
 
+    static updateUser = async(userId, user) => {
+        return await userDao.update(userId, user);
+    };
+
 }
