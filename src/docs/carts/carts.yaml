@@ -1,0 +1,218 @@
+paths:
+  /api/carts:
+    post:
+      summary: Da de alta un nuevo carrito.
+      tags:
+        - Carrito
+      responses:
+        "200":
+          description: Carrito creado correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    $ref: "#components/schemas/EmptyCart"
+    get:
+      summary: Devuelve todos los carritos.
+      tags:
+        - Carrito
+      responses:
+        "200":
+          description: Se obtuvo correctamente la información del carrito.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: "#components/schemas/Cart"
+
+  /api/carts/{cid}:
+    get:
+      summary: Devuelve la información de un carrito.
+      tags:
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Se obtuvo correctamente el carrito.
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/Cart"
+    put:
+      summary: Actualiza la información de un carrito.
+      tags:
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Carrito actualizado correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    $ref: "#components/schemas/Cart"
+
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Agrega un producto al carrito.
+      tags:
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto agregado correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    schema:
+                      $ref: "#components/schemas/Cart"
+                  message:
+                    type: string
+        "401":
+          description: No tiene autorización para agregar productos al carrito.
+    delete:
+      summary: Elimina un producto del carrito.
+      tags:
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    $ref: "#components/schemas/Cart"
+                  message:
+                    type: string
+        "400":
+          description: No se encontró el carrito o el producto.
+
+  /api/carts/{cid}/purchase:
+    post:
+      summary: Realiza el checkout del carrito.
+      tags:
+        - Carrito
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: Id del carrito
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Checkout realizado correctamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: "#components/schemas/ProductArray"
+
+components:
+  schemas:
+    EmptyCart:
+      type: object
+      properties:
+        _id:
+          type: objectId
+          description: id del producto generado por MongoDB
+        products:
+          type: array
+      exmple:
+        _id: asd8y12k3j8asdh12
+        products: []
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: objectId
+          description: id del producto generado por MongoDB
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              quantity:
+                type: numeric
+                description: Cantidad del producto en el carrito.
+              productId:
+                type: objectId
+                descripcion: id del producto generado por MongoDB.
+      example:
+        _id: dj81o2ijd8lqkwj8
+        products: [{6, ej891j2kjqhd81}, {2, uq26i9a78uilb2}]
+    ProductArray:
+      type: object
+      properties:
+        quantity:
+          type: numeric
+          description: Cantidad del producto en el carrito.
+        productId:
+          type: objectId
+          description: id del producto generado por MongoDB.

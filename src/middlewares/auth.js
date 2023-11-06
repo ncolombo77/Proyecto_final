@@ -24,7 +24,7 @@ export const checkRole = (roles) => {
             next();
         }
         else {
-            res.json({status: "error", message: "No tiene permisos para utilizar esta función."})
+            res.status(401).json({status: "error", message: "No tiene permisos para utilizar esta función."})
         }
     }
 };

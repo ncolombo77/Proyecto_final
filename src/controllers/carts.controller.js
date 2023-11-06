@@ -72,7 +72,7 @@ export class CartsController {
 
             }
             else {
-                res.json({ status: "error", message: `El carrito ${ cid } no existe.`});
+                res.status(400).json({ status: "error", message: `El carrito ${ cid } no existe.`});
             }
     
         }
@@ -97,16 +97,18 @@ export class CartsController {
                 {
                     let indice = cart.products.findIndex(prod => product.id == id);
                     cart.products.splice(indice, 1);
-                    CartsServices.updateCart(cartId, cart);
+                    const cartUpdated = CartsServices.updateCart(cartId, cart);
+
+                    res.json({ status: "success", data: cartUpdated });
                 }
                 else
                 {
-                    res.json({ status: "error", message: `El producto ${ pid } no existeen el carrito ${ cid }.`});
+                    res.status(400).json({ status: "error", message: `El producto ${ pid } no existe en el carrito ${ cid }.`});
                 }
             }
             else
             {
-                res.json({ status: "error", message: `El carrito ${ cid } no existe.`});
+                res.status(400).json({ status: "error", message: `El carrito ${ cid } no existe.`});
             }
     
         }
@@ -129,25 +131,18 @@ export class CartsController {
     
                 cart.products = newProducts;
     
-                CartsServices.updateCart(cart);
+                const cartUpdated = CartsServices.updateCart(cart);
+
+                res.json({ status: "success", data: cartUpdated });
     
             }
             else {
-                res.json({ status: "error", message: `El carrito ${ cid } no existe.`});
+                res.status(400).json({ status: "error", message: `El carrito ${ cid } no existe.`});
             }
     
         }
         catch (error) {
             res.json({ status:"error", message: error.message });
-        }
-    };
-
-
-    static purchase = async (req, res) => {
-        try {
-            
-        } catch (error) {
-            res.json({status: "error", message: error.message});
         }
     };
 

@@ -19,6 +19,9 @@ import { chatModel } from "./dao/models/chat.model.js";
 import session from "express-session";
 import mongoStore from "connect-mongo";
 
+import { swaggerSpecs } from "./config/swagger.config.js";
+import swaggerUI from "swagger-ui-express";
+
 import { initializePassport } from "./config/passportConfig.js";
 import passport from "passport";
 
@@ -70,6 +73,8 @@ app.use("/api/users", usersRouter);
 
 app.use(errorHandler);
 
+// Endpoint para el acceso a la documentación de la API
+app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
 
 socketServer.on("connection", (socketConnected) => {
 
