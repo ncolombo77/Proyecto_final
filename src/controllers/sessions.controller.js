@@ -24,6 +24,14 @@ export class SessionsController {
     };
 
 
+    static currentUser = (req, res) => {
+        if (req.user)
+            res.json({status: "success", data: req.user});
+        else
+            res.json({status: "error", message: "No hay usuario logueado."});
+    };
+
+
     static redirectProfile = (req, res) => {
         res.redirect(303, "/profile");
     };

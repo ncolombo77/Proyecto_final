@@ -1,0 +1,13 @@
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}
+{"level":"info","message":"Ingresa al createProduct"}
+{"level":"info","message":{"body":{"category":"Alfajores","code":"COD001","description":"Descripción del producto Test.","price":100,"status":"activo","stock":100,"title":"TestProduct"},"user":{"_id":"6519a21d14883bda3e9cacb6","email":"nicolas@coder.com","password":"coder"}}}
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}
+{"level":"info","message":"Servidor iniciado en el puerto 8080."}

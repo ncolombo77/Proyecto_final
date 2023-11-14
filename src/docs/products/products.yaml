@@ -147,12 +147,23 @@ components:
         category:
           type: string
           description: Categoría del producto
+        image:
+          type: string
+          description: Nombre de la imagen del producto
         owner:
           type: string
           description: Propietario (creador) del producto
       example:
-        _id: k89quwekjalsdu
-        title: "Alfajor de dulce de leche"
+        _id: 64c85956cd260069a4d68920
+        title: "Butter Queen - Red Velvet"
+        description: "Un alfajor de textura inigualable, cración del chef Agustín Cruz De Giovanni. Una equilibrada y deliciosa combinación de remolacha y chocolate blanco que viene a romper los cánones establecidos."
+        price: 300
+        code: "ALF001"
+        stock: 100
+        status: "true"
+        category: "Alfajores"
+        image: "ButterQueen_Red_Velvet.jpg"
+        owner: "653e960122f1f6013933e8da"
   requestBodies:
     UpdateProduct:
       type: object

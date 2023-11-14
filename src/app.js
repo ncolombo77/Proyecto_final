@@ -113,3 +113,5 @@ socketServer.on("connection", (socketConnected) => {
     });
 
 });
+
+export { app };

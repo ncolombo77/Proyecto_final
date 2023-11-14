@@ -28,7 +28,9 @@ router.get("/github-callback", passport.authenticate("githubLoginStrategy", {
     failureRedirect: "/api/sessions/fail-signup"
 }), SessionsController.redirectProfile);
 
-router.get("/logout", SessionsController.logOut)
+router.get("/logout", SessionsController.logOut);
+
+router.get("/current", SessionsController.currentUser);
 
 router.post("/forgot-password", SessionsController.forgotPassword);
 

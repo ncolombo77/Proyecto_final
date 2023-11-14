@@ -80,7 +80,7 @@ export class ProductManagerMongo {
         }
         catch(error) {
             logger.error(`Se produjo un error al eliminar un producto (método delete()): ${ error.message }`);
-            throw new error(`Se produjo un error al eliminar el producto.`);
+            throw error(`Se produjo un error al eliminar el producto.`);
         }
     };
     

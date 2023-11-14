@@ -2,6 +2,10 @@ import { ProductsServices } from "../services/products.services.js";
 import { CustomError } from "../services/error/customError.services.js";
 import { EError } from "../enums/EError.js";
 import { invalidLimitErrorMsg } from "../services/error/customErrorMessages.services.js";
+import { addLogger } from "../helpers/logger.js";
+
+const logger = addLogger();
+
 
 export class ProductsController {
 
@@ -68,7 +72,7 @@ export class ProductsController {
         try {
             const productInfo = req.body;
     
-            const productUpdated = await ProductsServices.updateProduct(productInfo);
+            const productUpdated = await ProductsServices.updateProduct(productInfo._id, productInfo);
     
             res.json({ status: "success", data: productUpdated, message: "Producto actualizado." });
         }
@@ -82,12 +86,12 @@ export class ProductsController {
         try {
             const productId = req.params.pid;
 
-            const product = await ProductsServices.getProduct(productId);
+            const product = await ProductsServices.getById(productId);
 
             // Se verifica que si el usuario es premium, sea el owner del producto.
             if (req.user.role === "premium" && product.owner.toString() === req.user._id.toString() || req.user.role === "admin") {
 
-                const productDeleted = await ProductsServices.delete(productId);
+                const productDeleted = await ProductsServices.deleteProduct(productId);
     
                 res.json({ status: "success", data: productDeleted });
 
