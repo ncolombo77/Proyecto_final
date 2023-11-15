@@ -47,7 +47,7 @@ export class CartsController {
             if (cart) {
                 const product = await ProductsServices.getById(productId);
 
-                if (req.user.role === "premium" && product.owner.toString() !== req.user._id.toString()) {
+                if (req.user.role !== "premium" && product.owner.toString() !== req.user._id.toString()) {
                     let prod = cart.products.find(p => p.productId == productId );
 
                     if (prod != undefined) {
@@ -91,11 +91,11 @@ export class CartsController {
             const cart = await CartsServices.getCart(cartId);
             if (cart)
             {
-                let product = cart.products.find((p) => { return parseInt(p.product) === parseInt(productId) });
+                let product = cart.products.find((p) => { return p.productId.toString() === productId.toString() });
     
                 if (product)
                 {
-                    let indice = cart.products.findIndex(prod => product.id == id);
+                    let indice = cart.products.findIndex(prod => prod.id.toString() === productId.toString());
                     cart.products.splice(indice, 1);
                     const cartUpdated = CartsServices.updateCart(cartId, cart);
 

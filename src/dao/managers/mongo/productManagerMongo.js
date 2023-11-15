@@ -75,12 +75,12 @@ export class ProductManagerMongo {
     // Eliminar un producto
     async delete(id) {
         try {
-            const productDeleted = await this.model.delete(id);
+            const productDeleted = await this.model.deleteOne({ _id : id });
             return productDeleted;
         }
         catch(error) {
             logger.error(`Se produjo un error al eliminar un producto (método delete()): ${ error.message }`);
-            throw error(`Se produjo un error al eliminar el producto.`);
+            throw error;
         }
     };
     

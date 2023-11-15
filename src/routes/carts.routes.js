@@ -15,7 +15,7 @@ router.get("/:cid", CartsController.getCart);
 
 router.post("/:cid/product/:pid", checkRole(["user"]), CartsController.addProductToCart);
 
-router.delete("/:cid/products/:pid", CartsController.removeProductFromCart);
+router.delete("/:cid/product/:pid", CartsController.removeProductFromCart);
 
 router.put("/:cid", CartsController.updateCart);
 
