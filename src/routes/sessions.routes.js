@@ -6,11 +6,13 @@ import { SessionsController } from "../controllers/sessions.controller.js";
 import { usersModel } from "../dao/models/users.model.js";
 import { createHash, isValidPassword } from "../utils.js";
 import passport from "passport";
+import { uploaderProfile } from "../utils.js";
+
 
 const router = Router()
 
 
-router.post("/signup", passport.authenticate("signupStrategy", {
+router.post("/signup", uploaderProfile.single("avatar"), passport.authenticate("signupStrategy", {
     failureRedirect: "/api/sessions/fail-signup"
 }), SessionsController.redirectLogin);
 

@@ -37,22 +37,31 @@ export class SessionsController {
     };
 
 
-    static logOut = (req, res) => {
-        req.logOut(error => {
-            if(error) {
-                return res.status(500).render("profile", {user: req.user, error: "No se pudo cerrar la sesión."});
-            }
-            else {
-                // Elimina la sesión de la base de datos.
-                req.session.destroy( error => {
-                    if (error) {
-                        return res.status(500).render("profile", {user: req.session.userInfo, error: "No se pudo cerrar la sesión."});
-                    }
-                });
-            }
-        });
-    
-        res.redirect(303, "/login");
+    static logOut = async (req, res) => {
+        try {
+            const user = req.user;
+            user.last_connection = new Date();
+            await UsersServices.updateUser(user._id, user);
+            req.logOut(async error => {
+                if(error) {
+                    return res.status(500).render("profile", {user: req.user, error: "No se pudo cerrar la sesión."});
+                }
+                else {
+                    // Elimina la sesión de la base de datos.
+                    await req.session.destroy( error => {
+                        if (error) {
+                            return res.status(500).render("profile", {user: req.session.userInfo, error: "No se pudo cerrar la sesión."});
+                        }
+                    });
+                }
+            });
+        
+            res.redirect(303, "/login");
+        }
+        catch (error) {
+            return res.status(500).render("profile", {user: req.session.userInfo, error: "No se pudo cerrar la sesión."});
+        }
+
     };
 
 

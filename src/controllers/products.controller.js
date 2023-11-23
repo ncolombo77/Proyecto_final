@@ -59,6 +59,7 @@ export class ProductsController {
         try {
             const productInfo = req.body;
             productInfo.owner = req.user._id;
+            productInfo.image = req.file.filename;
             const productCreated = await ProductsServices.createProduct(productInfo);
             res.json({ status: "success", data: productCreated, message: "Producto creado." });
         }

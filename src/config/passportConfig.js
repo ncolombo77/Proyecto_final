@@ -31,7 +31,8 @@ export const initializePassport = () => {
                     age,
                     email: username,
                     password: createHash(password),
-                    role: role
+                    role: role,
+                    avatar: req.file.filename
                 };
                 const userCreated = await UsersServices.saveUser(newUser);
 
@@ -60,6 +61,8 @@ export const initializePassport = () => {
 
                 // Si el usuario existe, se valida la password.
                 if (isValidPassword(user, password)) {
+                    user.last_connection = new Date();
+                    await UsersServices.updateUser(user._id, user);
                     return done(null, user);
                 }
                 else {

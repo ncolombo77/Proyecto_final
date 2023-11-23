@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { ProductsController } from "../controllers/products.controller.js";
 import { checkRole } from "../middlewares/auth.js";
+import { uploaderProduct } from "../utils.js";
 
 const validateFields = (req, res, next) => {
     const productInfo = req.body;
@@ -22,7 +23,7 @@ router.get("/", ProductsController.getProducts);
 
 router.get("/:pid", ProductsController.getProduct);
 
-router.post("/", checkRole(["admin", "premium"]), validateFields, ProductsController.createProduct);
+router.post("/", checkRole(["admin", "premium"]), validateFields, uploaderProduct.single("image"), ProductsController.createProduct);
 
 router.put("/:pid", checkRole(["admin", "premium"]), validateFields, ProductsController.updateProduct);
 
