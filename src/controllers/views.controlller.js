@@ -54,7 +54,7 @@ export class ViewsController {
             if (result.page == 1)
                 baseUrl += `?page=1`;
     
-            const hostUrl = `${req.protocol}://${req.get("host")}`;
+            const hostUrl = `https://${req.get("host")}`;
     
             const resultProductsView = {
                 status:"success",
