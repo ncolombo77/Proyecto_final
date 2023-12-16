@@ -158,7 +158,7 @@ export class ViewsController {
                 user: req.user.toJSON(),
                 products: productsInCart,
                 totalAmmount,
-                hostUrl: `${req.protocol}://${req.get("host")}`
+                hostUrl: `https://${req.get("host")}`
             };
 
             res.render("cart", resultCartView);
