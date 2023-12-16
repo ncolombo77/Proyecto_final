@@ -37,6 +37,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public")));
+app.enable("trust proxy");
 
 const httpServer = app.listen(port, () => logger.info(`Servidor iniciado en el puerto ${ port }.`));
 

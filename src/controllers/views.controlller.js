@@ -54,7 +54,7 @@ export class ViewsController {
             if (result.page == 1)
                 baseUrl += `?page=1`;
     
-            const hostUrl = `https://${req.get("host")}`;
+            const hostUrl = `${req.protocol}://${req.get("host")}`;
     
             const resultProductsView = {
                 status:"success",
@@ -158,7 +158,7 @@ export class ViewsController {
                 user: req.user.toJSON(),
                 products: productsInCart,
                 totalAmmount,
-                hostUrl: `https://${req.get("host")}`
+                hostUrl: `${req.protocol}://${req.get("host")}`
             };
 
             res.render("cart", resultCartView);

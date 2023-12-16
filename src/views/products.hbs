@@ -55,6 +55,9 @@
             if (jsonResponse.status == "error") {
                 alert(jsonResponse.message);
             }
+            else {
+                alert("Producto agregado al carrito.")
+            }
         })
         .catch(e => {
             alert(e);
