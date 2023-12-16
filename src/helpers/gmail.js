@@ -35,3 +35,26 @@ export const recoveryEmail = async (req, userEmail, emailToken) => {
 
     }
 };
+
+
+export const deletedProductEmail = async (userEmail, product) => {
+    try {
+
+        await gmailTransporter.sendMail({
+            subject: "Producto eliminado",
+            to: userEmail,
+            from: "Ecommerce Coderhouse",
+            html: `
+                <p>Se eliminó un producto que usted había creado:</p>
+                <p>Id del producto: ${product._id}</p>
+                <p>Nombre: ${product.title}</p>
+                <p>Descripción: ${product.description}</p>
+            `
+        });
+
+    } catch (error) {
+
+        console.log(`Se produjo un error ${error.message}`)
+
+    }
+};

@@ -239,3 +239,35 @@ article img {
 .GithubLogin {
     border-radius: 8px;
 }
+
+
+table {
+    width: 80%;
+    font-size: 1.8em;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid 1px white;
+    padding: 1rem;
+    border-collapse: collapse;
+}
+
+tr {
+    border: solid 1px white;
+}
+
+td, th {
+    padding: 0.4rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    border: solid 1px white;
+}
+
+td button {
+    padding: 0.2rem;
+    padding-right: 0.4rem;
+    padding-left: 0.4rem;
+}
+
+.tdCentrada {
+    text-align: center;
+}

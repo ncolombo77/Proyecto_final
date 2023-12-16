@@ -1,0 +1,74 @@
+<h1>Administración de usuarios</h1>
+
+<br />
+<br />
+<br />
+
+<table>
+
+    <tr>
+        <th>E-Mail</th>
+        <th>Nombre y apellido</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+
+    {{#each users}}
+    <tr>
+        <td>{{this.email}}</td>
+        <td>{{this.last_name}}, {{this.first_name}}</td>
+        <td>{{this.role}}</td>
+        <td>{{this.status}}</td>
+        <td class="tdCentrada">
+            <button onclick="modifyRole('{{this._id}}')"> Modificar Rol </button>
+            &nbsp;&nbsp;
+            <button onclick="eliminarUsuario('{{this._id}}')"> Eliminar </button>
+        </td>
+    </tr>
+    {{/each}}
+
+</table>
+
+<script>
+
+    const modifyRole = (userId) => {
+        fetch('{{hostUrl}}/api/users/premium/' + userId, {
+            method: 'POST',
+            headers: {"Content-type": "application/json;charset=UTF-8"}
+        })
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (jsonResponse.status == "error") {
+                alert(jsonResponse.message);
+            }
+            else {
+                window.location.reload();
+            }
+        })
+        .catch(e => {
+            alert(e);
+        });
+    }
+
+
+    const eliminarUsuario = (userId) => {
+        fetch('{{hostUrl}}/api/users/' + userId, {
+            method: 'DELETE',
+            headers: {"Content-type": "application/json;charset=UTF-8"}
+        })
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (jsonResponse.status == "error") {
+                alert(jsonResponse.message);
+            }
+            else {
+                window.location.reload();
+            }
+        })
+        .catch(e => {
+            alert(e);
+        });
+    }
+
+</script>

@@ -1,4 +1,6 @@
 import { ProductsServices } from "../services/products.services.js";
+import { UsersServices } from "../services/users.services.js";
+import { CartsServices } from "../services/carts.services.js";
 
 export class ViewsController {
 
@@ -41,7 +43,13 @@ export class ViewsController {
             }
 
             const result = await ProductsServices.getWithPaginate(query, { page, limit, sort:{price:sortValue}, lean: true });
-    
+
+            let productsInCart = 0;
+            if (req.user) {
+                const userCart = await CartsServices.getCart(req.user.cart);
+                productsInCart = userCart.products.length;
+            }
+
             let baseUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
             if (result.page == 1)
                 baseUrl += `?page=1`;
@@ -60,7 +68,8 @@ export class ViewsController {
                 prevLink: result.hasPrevPage ? `${baseUrl.replace(`page=${result.page}`, `page=${result.prevPage}`)}` : null,
                 nextLink: result.hasNextPage ? `${baseUrl.replace(`page=${result.page}`, `page=${result.nextPage}`)}` : null,
                 hostUrl,
-                user: req.user ? JSON.parse(JSON.stringify(req.user)) : ""
+                user: req.user ? JSON.parse(JSON.stringify(req.user)) : "",
+                productsInCart
             };
     
             res.render("products", resultProductsView );
@@ -97,6 +106,66 @@ export class ViewsController {
     static renderResetPassword = (req, res) => {
         const token = req.query.token;
         res.render("resetPassword", {token});
+    };
+
+
+    static renderUsers = async (req, res) => {
+        try {
+
+            const users = await UsersServices.getUsers();
+
+            const resultUsersView = {
+                user: req.user.toJSON(),
+                users: users,
+                hostUrl: `${req.protocol}://${req.get("host")}`
+            };
+
+            res.render("users", resultUsersView);
+
+        } catch (error) {
+            res.render("error", error);
+        }
+    };
+
+
+    static renderCart = async (req, res) => {
+        try {
+
+            const userCart = await CartsServices.getCart(req.user.cart);
+
+            let productsInCart = [];
+            let totalAmmount = 0;
+
+            for (let i = 0; i < userCart.products.length; i++) {
+
+                const prod = await ProductsServices.getById(userCart.products[i].productId);
+
+                if (prod) {
+
+                    productsInCart.push({
+                        title: prod.title,
+                        price: prod.price,
+                        quantity: userCart.products[i].quantity,
+                        subTotal: prod.price * userCart.products[i].quantity
+                    });
+
+                    totalAmmount += prod.price * userCart.products[i].quantity;
+
+                }
+            }
+
+            const resultCartView = {
+                user: req.user.toJSON(),
+                products: productsInCart,
+                totalAmmount,
+                hostUrl: `${req.protocol}://${req.get("host")}`
+            };
+
+            res.render("cart", resultCartView);
+
+        } catch (error) {
+            res.render("error", error);
+        }
     };
 
 

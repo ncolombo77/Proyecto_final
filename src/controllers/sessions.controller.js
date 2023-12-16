@@ -52,11 +52,13 @@ export class SessionsController {
                         if (error) {
                             return res.status(500).render("profile", {user: req.session.userInfo, error: "No se pudo cerrar la sesión."});
                         }
+                        else {
+                            res.redirect(303, "/login");
+                        }
                     });
                 }
             });
         
-            res.redirect(303, "/login");
         }
         catch (error) {
             return res.status(500).render("profile", {user: req.session.userInfo, error: "No se pudo cerrar la sesión."});

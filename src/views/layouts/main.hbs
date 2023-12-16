@@ -14,9 +14,21 @@
             <a class="nav-link" href="/products">Productos</a>
         </div>
         <div class="nav-part">
+            {{#if user}}
+                {{#if productsInCart}}
+                    <a class="nav-link" href="/cart">Carrito: {{productsInCart}}</a>
+                {{/if}}
                 <a class="nav-link" href="/profile">Perfil</a>
+                <a class="nav-link" href="/api/sessions/logout">Logout</a>
+                {{#if user.role}}
+                    {{#ifEq user.role "admin"}}
+                        <a class="nav-link" href="/users">Usuarios</a>
+                    {{/ifEq}}
+                {{/if}}
+            {{else}}
                 <a class="nav-link" href="/register">Registro</a>
                 <a class="nav-link" href="/login">Login</a>
+            {{/if}}
         </div>
     </nav>
     </header>

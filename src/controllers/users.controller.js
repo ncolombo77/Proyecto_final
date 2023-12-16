@@ -34,7 +34,8 @@ export class UsersController {
         }
     };
 
-    static uploadDocuments = async () => {
+
+    static uploadDocuments = async (req, res) => {
         try {
             const userId = req.params.uid;
 
@@ -73,5 +74,79 @@ export class UsersController {
             res.json({ status: "error", message: "No se pudieron cargar los documentos"});
         }
     }
+
+
+    static getUsers = async (req, res) => {
+        try {
+
+            const users = await UsersServices.getUsers();
+
+            const usersList = users.map(({first_name, last_name, email, age}) => ({first_name, last_name, email, age}));
+
+            res.json({ status: "success", data: usersList });
+
+        } catch (error) {
+            res.json({ status: "error", message: "No se pudieron obtener los usuarios"});
+        }
+    }
+
+
+    static deleteInactiveUsers = async (req, res) => {
+        try {
+
+            const users = await UsersServices.getUsers();
+
+            const fechaActual = new Date();
+
+            let deletedUsers = [];
+
+            for (let i = 0; i < users.length; i++) {
+
+                // Al restar dos fechas, el resultado está expresado en milisegundos.
+                let milisegundosSinConexion = fechaActual - users[i].last_connection;
+
+                // Para obtener la cantidad de días entre las dos fechas, se divide la
+                // cantidad de milisegundos entre las dos fechas por la cantidad de milisegundos en un día.
+                let diasSinConexion = Math.ceil(milisegundosSinConexion / (1000 * 60 * 60 * 24));
+
+                // Si pasaron más de dos días sin conexión, se elimina el usuario.
+                if (diasSinConexion > 2)
+                {
+                    let deletedUser = await UsersServices.deleteUser(users[i]._id);
+
+                    deletedUsers.push(deletedUser);
+                }
+
+            }
+
+            res.json({ status: "success", data: deletedUsers });
+
+        } catch (error) {
+            res.json({ status: "error", message: "No se pudieron eliminar los usuarios inactivos."});
+        }
+    }
+
+
+    static deleteUser = async (req, res) => {
+        try {
+
+            const userId = req.params.uid;
+
+            if (req.user._id.toString() === userId.toString()) {
+                res.json({ status: "error", message: "No se puede eliminar el usuario actualmente logueado."});
+            }
+            else {
+                const deletedUser = await UsersServices.deleteUser(userId);
+
+                res.json({ status: "success", data: deletedUser });
+            }
+
+        }
+        catch (error) {
+            res.json({ status: "error", message: "No se pudo eliminar el usuario."});
+        }
+    }
+
+
 
 }

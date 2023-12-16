@@ -28,18 +28,17 @@ export class UsersManagerMongo {
             }
             else
             {
-                throw new Error(`El usuario con id ${ userId } no existe.`);
+                throw Error(`El usuario con id ${userId} no existe.`);
             }
         } catch (error) {
             logger.error(`Se produjo un error al buscar el empleado con el id ${userId}.`);
-            throw error;
         }
     };
 
 
     async getByEmail(userEmail) {
         try {
-            const user = await this.model.findOne({email: userEmail});
+            const user = await this.model.findOne({email: userEmail}).lean();
             if (user)
             {
                 return user;
@@ -50,7 +49,6 @@ export class UsersManagerMongo {
             }
         } catch (error) {
             logger.error(`Se produjo un error al buscar el usuario con el e-mail ${userEmail}.`);
-            throw error;
         }
     };
 
@@ -64,4 +62,28 @@ export class UsersManagerMongo {
             throw error;
         }
     };
+
+
+    async getUsers() {
+        try {
+            const users = await this.model.find().lean();
+            return users;
+        } catch (error) {
+            logger.error(`Se produjo un error al obtener los usuarios.`);
+            throw error;
+        }
+    }
+
+
+    async delete(id) {
+        try {
+            const userDeleted = await this.model.deleteOne({ _id : id });
+            return userDeleted;
+        } catch (error) {
+            logger.error(`Se produjo un error al eliminar el usuario ${id}.`);
+            throw error;
+        }
+    };
+
+
 }

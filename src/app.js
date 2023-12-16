@@ -42,7 +42,14 @@ const httpServer = app.listen(port, () => logger.info(`Servidor iniciado en el p
 
 const socketServer = new Server(httpServer);
 
-app.engine('.hbs', engine({extname: '.hbs'}));
+
+app.engine('.hbs', engine({extname: '.hbs', helpers: {
+    ifEq: function (v1, v2, options) {
+        if (v1 === v2){
+            return options.fn(this);
+        }
+    }    
+}}));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, '/views'));
 

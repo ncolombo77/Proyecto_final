@@ -19,6 +19,6 @@ export const errorHandler = (error, req, res, next) => {
             res.status(401).json({status: "error", error: error});
             break;
         default:
-            res.status(500).json({status: "error", error: "Error desconocido."});
+            res.status(500).json({status: "error", error: "Error desconocido:" + error.message});
     };
 }

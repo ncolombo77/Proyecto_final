@@ -20,11 +20,17 @@ export const showLoginView = (req, res, next) => {
 
 export const checkRole = (roles) => {
     return (req, res, next) => {
-        if (roles.includes(req.user.role)) {
-            next();
+        if (!req.user)
+        {
+            res.status(401).json({status: "error", message: "Debe realizar el login antes de utilizar esta función."})
         }
         else {
-            res.status(401).json({status: "error", message: "No tiene permisos para utilizar esta función."})
+            if (roles.includes(req.user.role)) {
+                next();
+            }
+            else {
+                res.status(403).json({status: "error", message: "No tiene permisos para utilizar esta función."})
+            }
         }
     }
 };

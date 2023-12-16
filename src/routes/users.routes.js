@@ -13,4 +13,10 @@ router.put("/:uid/documents", uploaderDocument.fields([
     { name: "estadoDeCuenta", maxCount: 1 }
 ]), UsersController.uploadDocuments);
 
+router.get("/", checkRole(["admin"]), UsersController.getUsers);
+
+router.delete("/", checkRole(["admin"]), UsersController.deleteInactiveUsers);
+
+router.delete("/:uid", checkRole(["admin"]), UsersController.deleteUser);
+
 export { router as usersRouter };

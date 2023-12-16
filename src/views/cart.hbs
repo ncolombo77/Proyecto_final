@@ -1,0 +1,72 @@
+<h1>Su carrito de compras</h1>
+
+<br />
+<br />
+<br />
+
+<table>
+
+    <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Subtotal</th>
+    </tr>
+
+    {{#each products}}
+    <tr>
+        <td>{{this.title}}</td>
+        <td class="tdCentrada">{{this.quantity}}</td>
+        <td class="tdCentrada">{{this.price}}</td>
+        <td class="tdCentrada">{{this.subTotal}}</td>
+    </tr>
+    {{/each}}
+
+</table>
+
+<p style="text-align: center">
+    El monto total de su compra es ${{totalAmmount}}.
+</p>
+
+<script>
+
+    const modifyRole = (userId) => {
+        fetch('{{hostUrl}}/api/users/premium/' + userId, {
+            method: 'POST',
+            headers: {"Content-type": "application/json;charset=UTF-8"}
+        })
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (jsonResponse.status == "error") {
+                alert(jsonResponse.message);
+            }
+            else {
+                window.location.reload();
+            }
+        })
+        .catch(e => {
+            alert(e);
+        });
+    }
+
+
+    const eliminarUsuario = (userId) => {
+        fetch('{{hostUrl}}/api/users/' + userId, {
+            method: 'DELETE',
+            headers: {"Content-type": "application/json;charset=UTF-8"}
+        })
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (jsonResponse.status == "error") {
+                alert(jsonResponse.message);
+            }
+            else {
+                window.location.reload();
+            }
+        })
+        .catch(e => {
+            alert(e);
+        });
+    }
+
+</script>

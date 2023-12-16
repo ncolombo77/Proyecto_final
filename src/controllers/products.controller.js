@@ -1,8 +1,10 @@
 import { ProductsServices } from "../services/products.services.js";
+import { UsersServices } from "../services/users.services.js";
 import { CustomError } from "../services/error/customError.services.js";
 import { EError } from "../enums/EError.js";
 import { invalidLimitErrorMsg } from "../services/error/customErrorMessages.services.js";
 import { addLogger } from "../helpers/logger.js";
+import { deletedProductEmail } from "../helpers/gmail.js";
 
 const logger = addLogger();
 
@@ -92,12 +94,22 @@ export class ProductsController {
             // Se verifica que si el usuario es premium, sea el owner del producto.
             if (req.user.role === "premium" && product.owner.toString() === req.user._id.toString() || req.user.role === "admin") {
 
+                // En caso de que el owner del producto sea un usuario premium, se le envía
+                // un correo electrónico informándole de la baja del producto.
+                const productOwner = await UsersServices.getUserById(product.owner.toString());
+                if (productOwner.role === "premium") {
+                    await deletedProductEmail(productOwner.email, product);
+                }
+
                 const productDeleted = await ProductsServices.deleteProduct(productId);
     
                 res.json({ status: "success", data: productDeleted });
 
             }
-            return res.json({ status: "error", message: "El usuario no tiene permisos para eliminar el producto." });
+            else
+            {
+                return res.json({ status: "error", message: "El usuario no tiene permisos para eliminar el producto." });
+            }
 
         }
         catch (error) {
