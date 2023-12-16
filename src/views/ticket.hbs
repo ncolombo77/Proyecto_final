@@ -1,0 +1,72 @@
+<h1>Compra finalizada</h1>
+
+<br />
+<div id="ticketInfo"><p>Procesando su compra, aguarde por favor...</p></div>
+<br />
+<br />
+<br />
+<div id="rejectedProducts"></div>
+<br />
+<br />
+
+<div class="paginador" id="botones"></div>
+
+<script>
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const cartId = urlParams.get('cartId');
+
+    fetch('{{hostUrl}}/api/carts/' + cartId + '/purchase', {
+        method: 'POST',
+        headers: {"Content-type": "application/json;charset=UTF-8"}
+    })
+    .then(response => response.json())
+    .then(jsonResponse => {
+
+        const ticketInfoElement = document.getElementById("ticketInfo");
+
+        if (jsonResponse.status == "error") {
+            ticketInfoElement.innerHTML = `<p>Error: ${jsonResponse.message}</p>`;
+        }
+        else {
+
+            const ticketInfo = jsonResponse.data.newTicket;
+
+            let info = `<p>Código del ticket: ${ticketInfo.code}</p>
+                        <p>Monto total: ${ticketInfo.amount}</p>
+                        <p>Fecha de compra: ${ticketInfo.purchase_datetime}</p>
+            `;
+
+            ticketInfoElement.innerHTML = info;
+
+            const rejectedProducts = jsonResponse.data.productosRechazados;
+            if (rejectedProducts.length > 0) {
+                const rejectedProductsElement = document.getElementById("rejectedProducts");
+
+                let items = "<p>Los siguientes productos no tienen stock, y por lo tanto no se incluyeron en el ticket:</p><p>";
+                rejectedProducts.forEach( item => {
+                    items = items + `${ item.nombre } (${item.cantidad} unidad(es)) <br />`;
+                });
+                rejectedProductsElement.innerHTML = items + "</p>";
+            }
+
+        }
+
+        const botonesElement = document.getElementById("botones");
+
+        botones.innerHTML = `
+            <form action="/cart">
+                <input type="submit" class="botonNavegacion" value="Volver al carrito">&nbsp;&nbsp;
+            </form>
+            &nbsp;&nbsp;&nbsp;
+            <form action="/products">
+                <input type="submit" class="botonNavegacion" value="Seguir comprando">
+            </form>
+            `;
+
+    })
+    .catch(e => {
+        alert(e);
+    });
+
+</script>

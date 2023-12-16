@@ -56,7 +56,8 @@
                 alert(jsonResponse.message);
             }
             else {
-                alert("Producto agregado al carrito.")
+                alert("Producto agregado al carrito.");
+                window.location.reload();
             }
         })
         .catch(e => {

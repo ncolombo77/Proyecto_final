@@ -271,3 +271,23 @@ td button {
 .tdCentrada {
     text-align: center;
 }
+
+
+.botonNavegacion {
+    font-size: 1.5em;
+    padding: 0.8rem;
+    background-color: #211720;
+    color: white;
+    border-radius: 8px;
+    block-size: 40px;
+    border: white 1px solid;
+    transition-duration: 400ms;
+    font-weight: bold;
+}
+
+.botonNavegacion:hover {
+    color: black;
+    background-color: #e8a65a;
+    border-color: #e8a65a;
+    cursor: pointer;
+}

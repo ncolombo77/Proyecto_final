@@ -17,6 +17,8 @@ router.get("/products", ViewsController.renderProducts);
 
 router.get("/cart", ViewsController.renderCart);
 
+router.get("/ticket", ViewsController.renderTicket);
+
 router.get("/realtimeproducts", ViewsController.renderRTProducts);
 
 router.get("/chat", ViewsController.renderChat);

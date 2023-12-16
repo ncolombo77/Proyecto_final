@@ -15,7 +15,8 @@ export class ViewsController {
 
 
     static renderLogin = (req, res) => {
-        res.render("login");
+        const hostUrl = `${req.protocol}://${req.get("host")}`;
+        res.render("login", { hostUrl });
     };
 
 
@@ -143,6 +144,7 @@ export class ViewsController {
                 if (prod) {
 
                     productsInCart.push({
+                        _id: prod._id,
                         title: prod.title,
                         price: prod.price,
                         quantity: userCart.products[i].quantity,
@@ -155,6 +157,7 @@ export class ViewsController {
             }
 
             const resultCartView = {
+                cartId: req.user.cart,
                 user: req.user.toJSON(),
                 products: productsInCart,
                 totalAmmount,
@@ -166,6 +169,11 @@ export class ViewsController {
         } catch (error) {
             res.render("error", error);
         }
+    };
+
+
+    static renderTicket = async (req, res) => {
+        res.render("ticket");
     };
 
 

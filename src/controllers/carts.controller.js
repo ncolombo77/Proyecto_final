@@ -95,11 +95,17 @@ export class CartsController {
     
                 if (product)
                 {
-                    let indice = cart.products.findIndex(prod => prod.id.toString() === productId.toString());
-                    cart.products.splice(indice, 1);
-                    const cartUpdated = CartsServices.updateCart(cartId, cart);
+                    let indice = cart.products.findIndex(prod => prod.productId.toString() === productId.toString());
 
-                    res.json({ status: "success", data: cartUpdated });
+                    if (indice > -1) {
+                        cart.products.splice(indice, 1);
+                        const cartUpdated = CartsServices.updateCart(cartId, cart);
+                        res.json({ status: "success", data: cartUpdated });
+                    }
+                    else {
+                        res.json({ status:"error", message: error.message });
+                    }
+
                 }
                 else
                 {

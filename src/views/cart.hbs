@@ -11,6 +11,7 @@
         <th>Cantidad</th>
         <th>Precio</th>
         <th>Subtotal</th>
+        <th>Acciones</th>
     </tr>
 
     {{#each products}}
@@ -19,20 +20,34 @@
         <td class="tdCentrada">{{this.quantity}}</td>
         <td class="tdCentrada">{{this.price}}</td>
         <td class="tdCentrada">{{this.subTotal}}</td>
+        <td class="tdCentrada">
+            <button onclick="eliminarProducto('{{this._id}}', '{{../cartId}}')"> Eliminar </button>
+        </td>
     </tr>
     {{/each}}
 
 </table>
 
+<br />
+<br />
+
 <p style="text-align: center">
     El monto total de su compra es ${{totalAmmount}}.
 </p>
 
+<br />
+<br />
+<br />
+
+<div class="paginador">
+        <button class="estiloBoton" onclick="finalizarCompra('{{cartId}}')">Finalizar compra</button>
+</div>
+
 <script>
 
-    const modifyRole = (userId) => {
-        fetch('{{hostUrl}}/api/users/premium/' + userId, {
-            method: 'POST',
+    const eliminarProducto = (productId, cartId) => {
+        fetch('{{hostUrl}}/api/carts/' + cartId + '/product/' + productId, {
+            method: 'DELETE',
             headers: {"Content-type": "application/json;charset=UTF-8"}
         })
         .then(response => response.json())
@@ -50,23 +65,8 @@
     }
 
 
-    const eliminarUsuario = (userId) => {
-        fetch('{{hostUrl}}/api/users/' + userId, {
-            method: 'DELETE',
-            headers: {"Content-type": "application/json;charset=UTF-8"}
-        })
-        .then(response => response.json())
-        .then(jsonResponse => {
-            if (jsonResponse.status == "error") {
-                alert(jsonResponse.message);
-            }
-            else {
-                window.location.reload();
-            }
-        })
-        .catch(e => {
-            alert(e);
-        });
+    const finalizarCompra = (cartId) => {
+        location.href = '{{hostUrl}}/ticket?cartId='+ cartId;
     }
 
 </script>
